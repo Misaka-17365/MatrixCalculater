@@ -1,3 +1,12 @@
+*
+
+!*.c
+!*.cpp
+!*.h
+!*.sln
+!*.vcxproj
+!*.vcxproj.filters
+
 # Prerequisites
 *.d
 
