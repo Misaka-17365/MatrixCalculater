@@ -2,8 +2,9 @@
 #define __FRACTION_H__
 
 #include<iostream>
+#include"empty_buffer.h"
 
-class fraction
+class Fraction
 {
 private:
     int prime_number[172] = { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61,
@@ -28,7 +29,7 @@ public:
         this->numerator = nu;
         this->denominator = 1;
     }*/
-    fraction(int nu = 0, int de = 1)
+    Fraction(int nu = 0, int de = 1)
     {
         this->numerator = nu;
         this->denominator = de;
@@ -77,7 +78,7 @@ public:
         }
     }
     // 重载：流输入运算符
-    friend std::istream& operator>>(std::istream& is, fraction& fr)
+    friend std::istream& operator>>(std::istream& is, Fraction& fr)
     {
         char str[20];
         int position;
@@ -104,7 +105,7 @@ public:
             }
         }
         // 确定分数or小数以及分数线和小数点的位置
-        for (int i = 0; ; i++)
+        for (int i = 0; i < strlen(str); i++)
         {
             if (str[i] == '.')
             {
@@ -141,7 +142,7 @@ public:
         {
             int int_part = 0, dec_part = 0;
             int n = 1;
-            fraction tmp;
+            Fraction tmp;
             for (int t = 0; t < position; t++)
             {
                 int_part = int_part * 10 + (str[t] - '0');
@@ -157,12 +158,12 @@ public:
             tmp.numerator = dec_part;
             tmp.denominator = n;
             tmp.simplify();
-            fr = (fraction)int_part + tmp;
+            fr = (Fraction)int_part + tmp;
         }
         if (!is_decimal && !is_fraction)
         {
             int int_part = 0;
-            for (int t = position + 1; t < strlen(str); t++)
+            for (int t = 0; t < strlen(str); t++)
             {
                 int_part = int_part * 10 + (str[t] - '0');
             }
@@ -177,7 +178,7 @@ public:
         return is;
     }
     // 重载：流输出运算符
-    friend std::ostream& operator<<(std::ostream& os, fraction fr)
+    friend std::ostream& operator<<(std::ostream& os, Fraction fr)
     {
         if (fr.denominator == 1)
         {
@@ -188,7 +189,7 @@ public:
         return os;
     }
     // 重载：等号（整型转为分数）
-    fraction operator=(int in)
+    Fraction operator=(int in)
     {
         this->numerator = in;
         this->denominator = 1;
@@ -200,43 +201,43 @@ public:
         return (double)this->numerator / (double)this->denominator;
     }
     // 重载：等号
-    fraction operator=(fraction fr)
+   Fraction operator=(Fraction fr)
     {
         this->numerator = fr.numerator;
         this->denominator = fr.denominator;
         return *this;
     }
     // 重载：加法
-    fraction operator+(fraction fr)
+    Fraction operator+(Fraction fr)
     {
-        fraction tmp;
+        Fraction tmp;
         tmp.numerator = this->numerator * fr.denominator + this->denominator * fr.numerator;
         tmp.denominator = this->denominator * fr.denominator;
         tmp.simplify();
         return tmp;
     }
     // 重载：减法
-    fraction operator-(fraction fr)
+    Fraction operator-(Fraction fr)
     {
-        fraction tmp;
+        Fraction tmp;
         tmp.numerator = this->numerator * fr.denominator - this->denominator * fr.numerator;
         tmp.denominator = this->denominator * fr.denominator;
         tmp.simplify();
         return tmp;
     }
     // 重载：乘法
-    fraction operator*(fraction fr)
+    Fraction operator*(Fraction fr)
     {
-        fraction tmp;
+        Fraction tmp;
         tmp.numerator = this->numerator * fr.numerator;
         tmp.denominator = this->denominator * fr.denominator;
         tmp.simplify();
         return tmp;
     }
     // 重载：除法
-    fraction operator/(fraction fr)
+    Fraction operator/(Fraction fr)
     {
-        fraction tmp;
+        Fraction tmp;
         tmp.numerator = this->numerator * fr.denominator;
         tmp.denominator = this->denominator * fr.numerator;
         tmp.simplify();
@@ -244,7 +245,7 @@ public:
     }
 };
 
-typedef fraction frac;
+typedef Fraction frac;
 
 #endif // !__FRACTION_H__
 
